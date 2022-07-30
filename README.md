@@ -14,7 +14,7 @@
 #### Phone:
       +1 302 276 43 79
 
-## Commands supported by CryptoInvestor servers
+## Commands supported by the server
  
       npm run, npm start
 
