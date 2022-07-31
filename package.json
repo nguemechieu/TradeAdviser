@@ -1,0 +1,126 @@
+{
+  "name": "tradeadviser",
+  "version": "1.0.0",
+  "private": true,
+  "proxy": "https://www.tradeadviser.org/",
+  "description": "Trade Management Application",
+  "start_url": ".",
+  "homepage ": "https://www.tradeadviser.org/",
+  "main": ".bin/www.js",
+  "scripts": {
+    "build:staging": "env-cmd -f .env.staging npm run build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "runserver": "node .bin/www.js",
+    "runproject": "nodemon .bin/www.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "echo\"Error : no test specified\" && exit 1",
+    "development": "concurrently \"npm run runproject\" \"npm run start\"",
+    "concurrently": "concurrently \"npm run development\" \"npm run start\"",
+    "production": "concurrently \"npm run runserver\" \"npm run  build\"",
+    "eject": "react-scripts eject",
+    "redux-dev-remote": "redux-devtools --hostname localhost --port 1024",
+    "watch": "nodemon --ext *"
+  },
+  "keywords": [
+    "app",
+    "development",
+    "redux-dev-remote",
+    "start",
+    "eject",
+    "build",
+    "test",
+    "production"
+  ],
+  "engines": {
+    "node": ">=16.0"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "moment": "^2.29.4",
+    "all": "^0.0.0",
+    "ansi-styles": "^6.1.0",
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "bootstrap": "^5.2.0",
+    "build": "^0.1.4",
+    "concurrently": "^7.3.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "date-fns": "^2.29.1",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.4.0",
+    "express-list-endpoints": "^6.0.0",
+    "gh-pages": "^4.0.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.7",
+    "process": "^0.11.10",
+    "promise": "^8.1.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.4.0",
+    "react-dom": "^18.2.0",
+    "react-prefixer": "^2.0.1",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
+    "sequelize": "^6.21.3",
+    "start": "^5.1.0",
+    "styled-components": "^5.3.5",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui": "^4.13.0",
+    "swagger-ui-express": "^4.5.0",
+    "uuid": "^8.3.2",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@devnote-dev/pterojs": "^2.0.1",
+    "dev-ip": "^1.0.1",
+    "dev-site": "^1.1.1",
+    "nodemon": "^2.0.19",
+    "styled-components": "^5.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguemechieu/cryptoinvestor.git"
+  },
+  "author": "NOEL MARTIAL NGUEMECHIEU",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nguemechieu/cryptoinvestor/issues"
+  },
+  "readme": "https://github.com/nguemechieu/cryptoinvestor#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "development": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ]
+}

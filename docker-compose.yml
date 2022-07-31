@@ -1,0 +1,18 @@
+version: latest
+services:
+  webapp:
+     image:  cryptoinvestor
+
+
+
+build: .bin/www.js
+    name: TradeAdviser
+      port: 4000
+
+        protocol: https
+         host: cryptoinvestor.link
+          path: /etc/cryptoinvestor/conf.d
+            secure: true doc
+              env: 4000
+                  websocket: 4000
+
