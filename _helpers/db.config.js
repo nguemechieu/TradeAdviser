@@ -8,7 +8,7 @@ module.exports = {
 
     PASSWORD: "AVNS_gQJ5tPjgUXI0bEAA_Z0",
 
-    DATABASE: "cryptoinvestors",
+    DATABASE: "tradeadviser",
 
     PORT:25060,
     dialect: "mysql",

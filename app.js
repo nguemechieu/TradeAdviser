@@ -11,21 +11,19 @@ const credentials = require('./middleware/credentials');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const errorHandler = require("./middleware/errorHandler");
-
-const moment = require('moment');
-
+const bodyParser=require('body-parser');
 
 
 // Initialize documentation module with SwaggerJsdoc
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
-            title: 'CryptoInvestor',
+            title: 'TradeAdviser',
             description: "Trade Management Application ",
             contact: {
                 name: "CryptoInvestor",
             },
-            servers: ["https://www.cryptoinvestor.link"]
+            servers: ["https://www.tradeadviser.org"]
         }
     },
 
@@ -69,6 +67,10 @@ app.use(express.json());
 //middleware for cookies
 app.use(cookieParser());
 //##################################################
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ extended: true }))
+
 //validate requests
 
 

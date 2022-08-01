@@ -3,9 +3,11 @@ const User = require('../model/User');
 const db = require("../_helpers/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const validateRequest = require("../middleware/validate-request");
 
 const getAllUsers = async (req, res) => {//get all users
-    const users = await User.find();
+    const users = await db.User.find();
     if (!users) return res.status(204).json({ 'message': 'No users found' });
     res.json(users);
 }
@@ -45,30 +47,59 @@ let updateUser=async  (req, res) => {
 
 };
 let createNewUser=async (req, res)=>{
-    if (!req?.body?.firstName || !req?.body?.lastName) {
-        return res.status(400).json({ 'message': 'First and last names are required' });
-    }
-    let foundUser = await db.User.findOne({ lastName: req.body.lastName });
-        if (foundUser) {//User already exists
-            return res.status(204).json({ message: "This User already exists"} )
-        }   else
-    try {
-        const result = await db.User.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            middleName: req.body.middleName,
-            birthDate: req.body.birthDate,
-            email: req.body.email,
-            country_code: req.body.country_code,
-            phone: req.body.phone,
-            location: req.body.location,
-            country: req.body.country,
-        });
+    // validate
 
-        res.status(200).json( {result: result, message: 'User created successfully'});
-    } catch (err) {
-        console.error(err);
-    }
+    const Joi= require('joi');
+    const schema = Joi.object({
+        username    :   Joi.string()    .required(),
+        email: Joi.string().required(),
+        role: Joi.string().required(),
+        password: Joi.string().required(),
+        confirmPassword: Joi.string().required(),
+        firstName: Joi.string().required(),
+        middleName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        country_code: Joi.string().required(),
+        phone: Joi.string().required(),
+    });
+    validateRequest(req,res, next, schema);
+
+
+
+    await db.User.findOne({ where: { username: req.body.username}})
+        .then(async user => {
+            if(!user){
+                const user = new db.User(req.body);
+                // hash password
+
+                if(req.body.password!==req.body.confirmPassword){
+
+                    return next(new Error(`Password Not Matched: ${req.body.password}`));
+                }
+
+                user.password= await bcrypt.hash(req.body.password, 10);
+                user.confirmPassword= await bcrypt.hash(req.body.confirmPassword, 10);
+                user.access_token=  jwt.sign(
+                    { "username": user.username },
+                    process.env.REFRESH_TOKEN_SECRET= user.password,
+                    { expiresIn: '10s' },next
+                );
+                user.refreshToken=  jwt.sign(
+                    { "username": user.username },
+                    process.env.REFRESH_TOKEN_SECRET=user.password+1,
+                    { expiresIn: '15s' },next
+                );
+                // save user
+                const result=await user.save();
+                if(result){ res.json({ message: 'New user created successfully'+user })
+
+                }else{ res.status(404).send({    message: ' user registration failed' });}
+            }
+            else {
+                return res.json({message: 'This username is already in used!.\nPlease choose a new one or contact nguemechieu@live.com .'})
+            }
+        })
+        .catch(err => {  res.status(500).send({ message: err.message }) });
 
 };
 let userLogout=async (req, res) => {
@@ -160,7 +191,7 @@ let userLogin=async (req, res)=>{
 
         // Send authorization roles and access token to user
         //req.setHeader['Authorization', 'Bearer ' + newRefreshToken]
-        res.redirect('/api/users/home')
+        res.render('home', { roles: roles, accessToken: newRefreshToken});
         //res.json({ roles, accessToken });
 
 

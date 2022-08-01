@@ -3,7 +3,7 @@
 
 const app = require('../app');
 const http = require("http");
-const debug=require("debug")('cryptoinvestor:server');
+const debug=require("debug")('tradeadviser:server');
  
 
 /**
